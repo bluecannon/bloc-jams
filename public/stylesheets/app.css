@@ -36,5 +36,8 @@ body.landing {
 .selling-points .point p {
   font-size: 14px; }
 
+.clear_fix {
+  clear: both; }
+
 
 /*# sourceMappingURL=app.css.map*/
