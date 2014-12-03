@@ -4,7 +4,10 @@ html {
 body {
   font-family: 'Open Sans';
   color: white;
-  min-height: 100%; }
+  min-height: 100%; 
+  background: -webkit-radial-gradient(  #2b1339, #380c77);
+  background: radial-gradient(   #2b1339, #380c77);
+}
 
 body.landing {
   background: #5b5579; }
@@ -39,5 +42,10 @@ body.landing {
 .clear_fix {
   clear: both; }
 
+.nav-bar {
+   background: #2c1231;
+   height: 90px;
+   padding: 0 100px;
+  }
 
 /*# sourceMappingURL=app.css.map*/
