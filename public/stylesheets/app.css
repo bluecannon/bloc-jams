@@ -4,17 +4,20 @@ html {
 body {
   font-family: 'Open Sans';
   color: white;
-  min-height: 100%; 
-  background: -webkit-radial-gradient(  #2b1339, #380c77);
-  background: radial-gradient(   #2b1339, #380c77);
-}
+  min-height: 100%;
+  background: -webkit-radial-gradient(#2b1339, #380c77);
+  background: radial-gradient(#2b1339, #380c77); }
 
-body.landing {
-  background: #5b5579; }
+body.landing .navbar {
+  margin-bottom: 0; }
+
+/* medium-purple: #7B46A3 - 123, 70, 163 */
+.player-header-nav {
+  background-color: rgba(123, 70, 163, 0.9); }
 
 .hero-content {
   background: #2f1d57;
-  padding: 100px; }
+  padding: 100px 0; }
 
 .hero-content h1 {
   font-size: 70px;
@@ -22,7 +25,7 @@ body.landing {
   font-weight: 300; }
 
 .selling-points {
-  padding: 100px; }
+  padding: 100px 0; }
 
 .selling-points .point {
   width: 32%;
@@ -42,10 +45,35 @@ body.landing {
 .clear_fix {
   clear: both; }
 
-.nav-bar {
-   background: #2c1231;
-   height: 90px;
-   padding: 0 100px;
-  }
+.album-header-container {
+  margin-top: 55px;
+  margin-bottom: 40px; }
+
+.album-header-information {
+  margin-top: 45px;
+  margin-bottom: 20px; }
+
+.album-header-information h3, .album-header-information h4, .album-header-information h5 {
+  line-height: 150%; }
+
+.album-header-information h3 {
+  font-size: 48px;
+  font-weight: 300; }
+
+.album-header-information h4 {
+  font-size: 24px;
+  font-weight: 700; }
+
+.album-header-information h5 {
+  font-size: 16px;
+  font-weight: 500; }
+
+.table.album-song-listing {
+  font-weight: 300; }
+
+.table.album-song-listing td {
+  padding: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.4); }
+
 
 /*# sourceMappingURL=app.css.map*/

@@ -3,32 +3,44 @@
 <head>
   <title>Bloc Jams</title>
   <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.17.1/build/cssreset/cssreset-min.css">
-  <link rel="stylesheet" type="text/css" href="/stylesheets/app.css">
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,800,600,700,300' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/app.css">
 </head>
 <body class='landing'>
-  <div class='nav-bar'> <!-- Nav Bar -->
-     <img src="/images/blocjams.png">
-  </div>
+  <nav class="player-header-nav navbar">
+    <div class="container">
+      <div class='navbar-header'> <!-- Nav Bar -->
+        <a class='logo navbar-left'>
+          <img src="/images/blocjams.png">
+        </a>
+      </div>
+    </div>
+  </nav>
   <div class='hero-content'> <!-- Hero content -->
-     <h1> Bloc Jams </h1>
-     <h3> Turn the music up! </h3>
+    <div class='container'>
+      <h1> Bloc Jams </h1>
+      <h3> Turn the music up! </h3>
+    </div>
   </div>
 
-  <div class='selling-points'> <!-- selling points -->
-    <div class='point'>
-      <h5> Choose your music </h5>
-      <p> The world is full of music; why should you have to listen to music that someone else chose? </p> 
+  <div class='selling-points container'> <!-- selling points -->
+    <div class='row'>
+      <div class='point col-md-4'>
+        <h5> Choose your music </h5>
+        <p> The world is full of music; why should you have to listen to music that someone else chose? </p> 
+      </div>
     </div>
-    <div class='point'>
+    <div class='point col-md-4'>
        <h5> Unlimited, streaming, ad-free </h5>
        <p> No arbitary limits. No distractions.</p>
     </div>
-    <div class='point'>
+    <div class='point col-md-4'>
       <h5>Mobile enabled</h5>
       <p> Listen to your music on the go. This straeming service is available on all mobile platforms.</p>
     </div>
-    <div class="clear_fix"></div>
   </div>
+  <div class="clear_fix"></div>
+  
 </body> 
 </html>
