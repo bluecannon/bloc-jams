@@ -1,2 +1,2 @@
   require('./landing');
-  /* require('./collection'); */
+  require('./collection'); 
