@@ -1,25 +1,7 @@
-html {
-  height: 100%; }
-
-body {
-  font-family: 'Open Sans';
-  color: white;
-  min-height: 100%;
-  background: -webkit-radial-gradient(#2b1339, #380c77);
-  background: radial-gradient(#2b1339, #380c77);
-  padding-bottom: 150px; }
-
-body.landing .navbar {
-  margin-bottom: 0;
-  padding-bottom: 0; }
-
-/* medium-purple: #7B46A3 - 123, 70, 163 */
-.player-header-nav {
-  background-color: rgba(123, 70, 163, 0.9); }
-
 .hero-content {
-  background: #2f1d57;
-  padding: 100px 0; }
+  background-color: #2f1d57;
+  padding: 100px 0;
+  background: #2f1d57; }
 
 .hero-content h1 {
   font-size: 70px;
@@ -28,11 +10,6 @@ body.landing .navbar {
 
 .selling-points {
   padding: 100px 0; }
-
-.selling-points .point {
-  width: 32%;
-  float: left;
-  padding: 0 0.5%; }
 
 .selling-points .point h5 {
   font-size: 24px;
@@ -43,9 +20,6 @@ body.landing .navbar {
 
 .selling-points .point p {
   font-size: 14px; }
-
-.clear_fix {
-  clear: both; }
 
 .album-header-container {
   margin-top: 55px;
@@ -76,6 +50,35 @@ body.landing .navbar {
 .table.album-song-listing td {
   padding: 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.4); }
+
+.album-song-button {
+  text-align: center;
+  font-size: 14px;
+  background-color: white;
+  color: #d2287b;
+  border-radius: 50% 50%;
+  display: inline-block;
+  width: 28px;
+  height: 28px; }
+
+.album-song-button:hover {
+  cursor: pointer;
+  color: white;
+  background-color: #d2287b; }
+
+.album-song-button i {
+  line-height: 28px; }
+
+.album-song-button .fa-play {
+  padding-left: 5px; }
+
+.album-song-listing td {
+  vertical-align: center; }
+
+td.song-number {
+  padding: 0;
+  height: 70px;
+  text-align: center; }
 
 .collection-album-container {
   margin-top: 30px;
@@ -136,41 +139,6 @@ body.landing .navbar {
 .collection-album-container .collection-overlay-button .fa-play {
   padding-left: 5px; }
 
-.album-song-button {
-  text-align: center;
-  font-size: 14px;
-  background-color: white;
-  color: #d2287b;
-  border-radius: 50% 50%;
-  display: inline-block;
-  width: 28px;
-  height: 28px;
-  transition: background-color 500ms; }
-
-.album-song-button:hover {
-  cursor: pointer;
-  color: white;
-  background-color: #d2287b; }
-
-.album-song-button i {
-  line-height: 28px; }
-
-.fa-play:hover {
-  cursor: pointer;
-  color: #7ab932; }
-
-.album-song-button .fa-play {
-  padding-left: 5px;
-  transition: background-color 1s; }
-
-.album-song-listing td {
-  vertical-align: center; }
-
-td.song-number {
-  padding: 0;
-  height: 70px;
-  text-align: center; }
-
 .player-bar {
   position: fixed;
   bottom: 0;
@@ -179,71 +147,73 @@ td.song-number {
   height: 150px;
   background: rgba(255, 255, 255, 0.3);
   z-index: 100; }
-
-.player-bar a, .player-bar a:hover {
-  color: white;
-  cursor: pointer;
-  text-decoration: none; }
-
-.player-bar .container {
-  display: table;
-  padding: 0;
-  min-height: 100%; }
+  .player-bar a, .player-bar a:hover {
+    color: white;
+    cursor: pointer;
+    text-decoration: none; }
+  .player-bar .container {
+    display: table;
+    padding: 0;
+    min-height: 100%; }
+  .player-bar .left-controls {
+    width: 25%;
+    text-align: left; }
+  .player-bar .right-controls {
+    width: 25%;
+    text-align: right; }
+  .player-bar .play-controls a {
+    font-size: 20px;
+    vertical-align: middle; }
+  .player-bar .play-controls .previous {
+    margin-right: 65px; }
+  .player-bar .play-controls .play-pause {
+    margin-right: 60px;
+    font-size: 30px; }
+  .player-bar .currently-playing {
+    width: 50%;
+    text-align: center;
+    position: relative; }
+    .player-bar .currently-playing .song-name, .player-bar .currently-playing .artist-name {
+      text-align: center;
+      margin: 0;
+      position: absolute;
+      width: 100%;
+      font-size: 16px;
+      font-weight: 300; }
+    .player-bar .currently-playing .song-name {
+      top: 20px; }
+    .player-bar .currently-playing .artist-name {
+      bottom: 20px; }
+  .player-bar .queue-toggle {
+    display: inline-block;
+    margin-left: 75px; }
+    .player-bar .queue-toggle i {
+      font-size: 20px; }
+  .player-bar .volume {
+    display: inline-block; }
+    .player-bar .volume i {
+      width: 40px;
+      font-size: 20px;
+      display: inline-block;
+      vertical-align: middle; }
+    .player-bar .volume .seek-bar {
+      display: inline-block;
+      width: 100px;
+      vertical-align: middle; }
 
 .player-bar-control-group {
   display: table-cell;
   vertical-align: middle; }
 
-.player-bar .left-controls {
-  width: 25%;
-  text-align: left; }
-
-.player-bar .right-controls {
-  width: 25%;
-  text-align: right; }
-
-.player-bar .play-controls a {
-  font-size: 20px;
-  vertical-align: middle; }
-
-.player-bar .play-controls .previous {
-  margin-right: 65px; }
-
-.player-bar .play-controls .play-pause {
-  margin-right: 60px;
-  font-size: 30px; }
-
-.player-bar .currently-playing {
-  width: 50%;
-  text-align: center;
-  position: relative; }
-
-.player-bar .currently-playing .song-name, .player-bar .currently-playing .artist-name {
-  text-align: center;
-  font-size: 12px;
-  margin: 0;
-  position: absolute;
-  width: 100%;
-  font-size: 16px;
-  font-weight: 300; }
-
-.player-bar .currently-playing .song-name {
-  top: 20px; }
-
-.player-bar .currently-playing .artist-name {
-  bottom: 20px; }
-
 .seek-control {
   position: relative; }
-
-.seek-control .current-time {
-  position: absolute;
-  top: 10px; }
-
-.seek-control .total-time {
-  position: absolute;
-  right: 0;
-  top: 10px; }
+  .seek-control .current-time {
+    position: absolute;
+    top: 10px; }
+  .seek-control .total-time {
+    position: absolute;
+    right: 0;
+    top: 10px; }
 
 .seek-bar {
   height: 5px;
@@ -251,52 +221,54 @@ td.song-number {
   border-radius: 2px;
   position: relative;
   cursor: pointer; }
+  .seek-bar .fill {
+    background: white;
+    width: 36%;
+    height: 5px;
+    border-radius: 2px; }
+  .seek-bar .thumb {
+    position: absolute;
+    height: 10px;
+    width: 10px;
+    background: white;
+    left: 36%;
+    margin-left: -5px;
+    top: 50%;
+    margin-top: -5px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 100ms ease-in-out; }
+  .seek-bar.no-animate .fill, .seek-bar.no-animate .thumb {
+    transition: none; }
+  .seek-bar:hover .thumb {
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px; }
 
-.seek-bar .fill {
-  background: white;
-  width: 36%;
-  height: 5px;
-  border-radius: 2px; }
+html {
+  height: 100%; }
 
-.seek-bar .thumb {
-  position: absolute;
-  height: 10px;
-  width: 10px;
-  background: white;
-  left: 36%;
-  margin-left: -5px;
-  top: 50%;
-  margin-top: -5px;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 100ms ease-in-out; }
+body {
+  font-family: 'Open Sans';
+  color: white;
+  min-height: 100%;
+  background: -webkit-radial-gradient(#2b1339, #380c77);
+  background: radial-gradient(#2b1339, #380c77);
+  padding-bottom: 150px; }
 
-.seek-bar:hover .thumb {
-  width: 20px;
-  height: 20px;
-  margin-top: -10px;
-  margin-left: -10px; }
+body.landing {
+  background: #5b5579;
+  padding-bottom: 0; }
 
-.player-bar .queue-toggle {
-  display: inline-block;
-  margin-left: 75px; }
+body.landing .navbar {
+  margin-bottom: 0; }
 
-.player-bar .queue-toggle i {
-  font-size: 20px; }
+.player-header-nav {
+  background-color: rgba(123, 70, 163, 0.9); }
 
-.player-bar .volume {
-  display: inline-block; }
-
-.player-bar .volume i {
-  width: 40px;
-  font-size: 20px;
-  display: inline-block;
-  vertical-align: middle; }
-
-.player-bar .volume .seek-bar {
-  display: inline-block;
-  width: 100px;
-  vertical-align: middle; }
+.clear_fix {
+  clear: both; }
 
 
 /*# sourceMappingURL=app.css.map*/
