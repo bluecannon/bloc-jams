@@ -125,7 +125,7 @@ require.register("scripts/album", function(exports, require, module) {
 
  var currentlyPlayingSong = null;
 
- var createSongRow = function(songNumber, songName, songLength) {
+var createSongRow = function(songNumber, songName, songLength) {
    var template =
        '<tr>'
      + '  <td class="song-number col-md-1" data-song-number="' + songNumber + '">' + songNumber + '</td>'
@@ -134,7 +134,7 @@ require.register("scripts/album", function(exports, require, module) {
      + '</tr>'
      ;
     // Instead of returning the row immediately, we'll attach hover
-  // functionality to it first.
+    // functionality to it first.
    var $row = $(template);
  
    var onHover = function(event) {
@@ -155,7 +155,7 @@ require.register("scripts/album", function(exports, require, module) {
      }
    };
  
-  // Toggle the play, pause, and song number based on the button clicked.
+   // Toggle the play, pause, and song number based on the button clicked.
    var clickHandler = function(event) {
      var songNumber = $(this).data('song-number');
  
@@ -180,7 +180,7 @@ require.register("scripts/album", function(exports, require, module) {
    $row.find('.song-number').click(clickHandler);
    $row.hover(onHover, offHover);
    return $row;   
- };
+}; /* end createSongRow */
 
 
 var changeAlbumView = function(album) {
@@ -210,18 +210,55 @@ var changeAlbumView = function(album) {
      $songList.append($newRow);
    }
  
- }; 
+}; /* end changeAlbumView function */
+
+var updateSeekPercentage = function($seekBar, event) {
+   var barWidth = $seekBar.width();
+   var offsetX = event.pageX - $seekBar.offset().left; // get mouse x offset here
+ 
+   var offsetXPercent = (offsetX  / barWidth) * 100;
+   offsetXPercent = Math.max(0, offsetXPercent);
+   offsetXPercent = Math.min(100, offsetXPercent);
+ 
+   var percentageString = offsetXPercent + '%';
+   $seekBar.find('.fill').width(percentageString);
+   $seekBar.find('.thumb').css({left: percentageString});
+};
+
+var setupSeekBars = function() {
+   $seekBars = $('.player-bar .seek-bar');
+   $seekBars.click(function(event) {
+     updateSeekPercentage($(this), event);
+   });
+
+   $seekBars.find('.thumb').mousedown(function(event){
+      var $seekBar = $(this).parent();
+ 
+      $seekBar.addClass('no-animate');
+      $(document).bind('mousemove.thumb', function(event){
+         updateSeekPercentage($seekBar, event);
+      });
+ 
+       //cleanup
+      $(document).bind('mouseup.thumb', function(){
+        $seekBar.removeClass('no-animate');
+        $(document).unbind('mousemove.thumb');
+        $(document).unbind('mouseup.thumb');
+      }); 
+    });
+}; 
+
  // This 'if' condition is used to prevent the jQuery modifications
  // from happening on non-Album view pages.
  //  - Use a regex to validate that the url has "/album" in its path.
 
- if (document.URL.match(/\/album.html/)) {
+if (document.URL.match(/\/album.html/)) {
    // Wait until the HTML is fully processed.
    $(document).ready(function() {
-         var album = albumPicasso;
-     changeAlbumView(albumPicasso);
+      changeAlbumView(albumPicasso);
+      setupSeekBars();
    });
- }
+} /* end of if */
 });
 
 ;require.register("scripts/app", function(exports, require, module) {
