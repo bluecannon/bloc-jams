@@ -262,12 +262,31 @@ if (document.URL.match(/\/album.html/)) {
 });
 
 ;require.register("scripts/app", function(exports, require, module) {
- //require('./landing');
+ //require('./landing');    // #35 Angularizing the Landing Page. // 
  //require('./album');
  //require('./collection');
  //require('./profile');
 
- blocJams = angular.module('BlocJams', ['ui.router']);
+  // #37 Angularize Collection Page. 1-08-2015 //
+  // Example Album
+ 
+ var albumPicasso = {
+   name: 'The Colors',
+   artist: 'Pablo Picasso',
+   label: 'Cubism',
+   year: '1881',
+   albumArtUrl: '/images/album-placeholder.png',
+   songs: [
+       { name: 'Blue', length: '4:26' },
+       { name: 'Green', length: '3:14' },
+       { name: 'Red', length: '5:01' },
+       { name: 'Pink', length: '3:21'},
+       { name: 'Magenta', length: '2:15'}
+     ]
+ };
+
+ // #36, Single Page App. 1-08-2015. Here's how it looks when we include ui-router in Bloc Jams //
+ blocJams = angular.module('BlocJams', ['ui.router']); 
 
  blocJams.config(['$stateProvider', '$locationProvider', function($stateProvider, $locationProvider) {
    $locationProvider.html5Mode(true);
@@ -277,10 +296,16 @@ if (document.URL.match(/\/album.html/)) {
      controller: 'Landing.controller',
      templateUrl: '/templates/landing.html'
    });
+   // #37 - Angularize Collection Page. 1/08/2015 //
+   $stateProvider.state('collection', {
+     url: '/collection',
+     controller: 'Collection.controller',
+     templateUrl: '/templates/collection.html'
+   });
+
  }]);
 
- // This is a cleaner way to call the controller than crowding it on the module definition.
- 
+ // This is a cleaner way to call the controller than crowding it on the module definition. //
  blocJams.controller('Landing.controller', ['$scope', function($scope) { 
      $scope.subText = "Turn the music up, Harry!";
 
@@ -299,6 +324,14 @@ if (document.URL.match(/\/album.html/)) {
      '/images/album-placeholders/album-8.jpg',
      '/images/album-placeholders/album-9.jpg',
      ];
+ }]);  // end of Landing.controller //
+
+ blocJams.controller('Collection.controller', ['$scope', function($scope) {
+   $scope.albums = [];
+ 
+   for (var i = 0; i < 33; i++) {
+     $scope.albums.push(angular.copy(albumPicasso));
+   } 
  }]);
 
 

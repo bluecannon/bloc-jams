@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html ng-app="BlocJams">
 <head>
-<title>Bloc Jams</title>
-  <link rel="stylesheet" type="text/css" href="/styles/app.css">
+  <title>Bloc Jams</title>
+  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.17.1/build/cssreset/cssreset-min.css">
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,800,600,700,300' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="/stylesheets/app.css">
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.min.js"></script>
   <script src="/javascripts/vendor.js"></script>
   <script src="/javascripts/app.js"></script>
@@ -17,18 +17,17 @@
   </script>
 </head>
 <body>
+  <p>Test</p>
   <nav class="player-header-nav navbar">
     <div class="container">
       <div class='navbar-header'> <!-- Nav Bar -->
-         <a ui-sref='landing' class='logo navbar-left'>
+        <a class='logo navbar-left'>
           <img src="/images/blocjams.png">
         </a>
       </div>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a ui-sref='collection'>Library</a></li>
-      </ul>
     </div>
   </nav>
+  <!-- Render templates here -->
   <div ui-view></div>
-</body>
+</body> 
 </html>
