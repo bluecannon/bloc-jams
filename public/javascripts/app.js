@@ -289,8 +289,8 @@ if (document.URL.match(/\/album.html/)) {
  blocJams = angular.module('BlocJams', ['ui.router']); 
 
  blocJams.config(['$stateProvider', '$locationProvider', function($stateProvider, $locationProvider) {
+   // #36 - Starting a Single Page Architecture. 12/20/2014 //
    $locationProvider.html5Mode(true);
- 
    $stateProvider.state('landing', {
      url: '/',
      controller: 'Landing.controller',
