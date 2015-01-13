@@ -296,11 +296,18 @@ if (document.URL.match(/\/album.html/)) {
      controller: 'Landing.controller',
      templateUrl: '/templates/landing.html'
    });
-   // #37 - Angularize Collection Page. 1/08/2015 //
+   // #37 - Angularize Collection Page. 1-08-2015 //
    $stateProvider.state('collection', {
      url: '/collection',
      controller: 'Collection.controller',
      templateUrl: '/templates/collection.html'
+   });
+
+   // #38 - Angularize Album Page. 1-12-2015 //
+   $stateProvider.state('album', {
+     url: '/album',
+     templateUrl: '/templates/album.html',
+     controller: 'Album.controller'
    });
 
  }]);
@@ -334,7 +341,39 @@ if (document.URL.match(/\/album.html/)) {
    } 
  }]);
 
+ // #38 - Angularize Album Page. 1-12-2015 //
+ blocJams.controller('Album.controller', ['$scope', function($scope) {
+   $scope.album = angular.copy(albumPicasso);
 
+   var hoveredSong = null;
+   var playingSong = null;
+ 
+   $scope.onHoverSong = function(song) {
+     hoveredSong = song;
+   };
+ 
+   $scope.offHoverSong = function(song) {
+     hoveredSong = null;
+   };
+
+   $scope.getSongState = function(song) {
+     if (song === playingSong) {
+       return 'playing';
+     }
+     else if (song === hoveredSong) {
+       return 'hovered';
+     }
+     return 'default';
+   };
+
+   $scope.playSong = function(song) {
+      playingSong = song;
+    };
+ 
+    $scope.pauseSong = function(song) {
+      playingSong = null;
+    };
+ }]);
 });
 
 ;require.register("scripts/collection", function(exports, require, module) {
