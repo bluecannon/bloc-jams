@@ -13,11 +13,11 @@
    year: '1881',
    albumArtUrl: '/images/album-placeholder.png',
    songs: [
-       { name: 'Blue', length: '4:26' },
-       { name: 'Green', length: '3:14' },
-       { name: 'Red', length: '5:01' },
-       { name: 'Pink', length: '3:21'},
-       { name: 'Magenta', length: '2:15'}
+        { name: 'Blue',    length: '4:26', audioUrl: '/music/placeholders/blue' },
+        { name: 'Green',   length: '3:14', audioUrl: '/music/placeholders/green' },
+        { name: 'Red',     length: '5:01', audioUrl: '/music/placeholders/red' },
+        { name: 'Pink',    length: '3:21', audioUrl: '/music/placeholders/pink' },
+        { name: 'Magenta', length: '2:15', audioUrl: '/music/placeholders/magenta' }
      ]
  };
 
@@ -69,12 +69,16 @@
      ];
  }]);  // end of Landing.controller //
 
- blocJams.controller('Collection.controller', ['$scope', function($scope) {
+ blocJams.controller('Collection.controller', ['$scope','SongPlayer', function($scope, SongPlayer) {
    $scope.albums = [];
  
    for (var i = 0; i < 33; i++) {
      $scope.albums.push(angular.copy(albumPicasso));
    } 
+   
+   $scope.playAlbum = function(album){
+      SongPlayer.setSong(album, album.songs[0]); // Targets first song in the array.
+   }
  }]);
 
  // #38 - Angularize Album Page. 1-12-2015 //
@@ -103,7 +107,6 @@
 
    $scope.playSong = function(song) {
      SongPlayer.setSong($scope.album, song);
-     SongPlayer.play();
     };
  
     $scope.pauseSong = function(song) {
@@ -121,6 +124,8 @@
  }]);
 
  blocJams.service('SongPlayer', function() {
+  // #42 - Playing Music. 1-13-2015 //
+   var currentSoundFile = null;
   // #41 - Functional Next and Previous Buttons. 1-13-2015 //
    var trackIndex = function(album, song) {
      return album.songs.indexOf(song);
@@ -133,9 +138,11 @@
  
      play: function() {
        this.playing = true;
+       currentSoundFile.play();  // #42 //
      },
      pause: function() {
        this.playing = false;
+       currentSoundFile.play();  // #42 //
      },
      // #41 - Functional Next and Previous Buttons. 1-13-2015 //
      next: function() {
@@ -144,7 +151,8 @@
        if (currentTrackIndex >= this.currentAlbum.songs.length) {
          currentTrackIndex = 0;
        }
-       this.currentSong = this.currentAlbum.songs[currentTrackIndex];
+       var song = this.currentAlbum.songs[currentTrackIndex];  // #42 //
+       this.setSong(this.currentAlbum, song);                  /* #42 */
      },
      previous: function() {
        var currentTrackIndex = trackIndex(this.currentAlbum, this.currentSong);
@@ -153,12 +161,25 @@
          currentTrackIndex = this.currentAlbum.songs.length - 1;
        }
  
-       this.currentSong = this.currentAlbum.songs[currentTrackIndex];
+       var song = this.currentAlbum.songs[currentTrackIndex];  /* #42 */
+       this.setSong(this.currentAlbum, song);                  /* #42 */
      },
-     
+
      setSong: function(album, song) {
+       // #42 - Playing Music. 1-13-2015 //
+       if (currentSoundFile) {
+        currentSoundFile.stop();
+       }  // end of #42 //
        this.currentAlbum = album;
        this.currentSong = song;
+
+       // #42 - Playing Music. 1-13-2015 //
+       currentSoundFile = new buzz.sound(song.audioUrl, {
+       formats: [ "mp3" ],
+       preload: true
+     });
+ 
+     this.play();
      }
    };
  });
