@@ -85,6 +85,7 @@
         vertical-align: middle;
       }
  
+      /* changed from .seek-bar in #43, 1-15-2015 */
       .slider {
         display: inline-block;
         width: 100px;
@@ -112,6 +113,7 @@
     }
   }
  
+  /* changed from .seek-bar in #43, 1-15-2015 */
   .slider {
     height: 5px;
     background: rgba(255, 255, 255, 0.3);
@@ -152,4 +154,4 @@
       margin-top: -10px;
       margin-left: -10px;
     } 
-  } 
+  } /* end of .slider */

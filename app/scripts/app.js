@@ -45,7 +45,6 @@
      templateUrl: '/templates/album.html',
      controller: 'Album.controller'
    });
-
  }]);
 
  // This is a cleaner way to call the controller than crowding it on the module definition. //
@@ -78,7 +77,7 @@
    
    $scope.playAlbum = function(album){
       SongPlayer.setSong(album, album.songs[0]); // Targets first song in the array.
-   }
+   };
  }]);
 
  // #38 - Angularize Album Page. 1-12-2015 //
@@ -116,7 +115,7 @@
 
  blocJams.controller('PlayerBar.controller', ['$scope', 'SongPlayer', function($scope, SongPlayer) {
   $scope.songPlayer = SongPlayer;
-}]);
+ }]);
  
  // #40 - Create Song Player Service Tied to Playerbar. 1-13-2015 //
  blocJams.controller('PlayerBar.controller', ['$scope', 'SongPlayer', function($scope, SongPlayer) {
@@ -182,4 +181,47 @@
      this.play();
      }
    };
- });
+   
+   blocJams.directive('slider', function() {
+
+     var updateSeekPercentage = function($seekBar, event) {
+       var barWidth = $seekBar.width();
+       var offsetX =  event.pageX - $seekBar.offset().left;
+       var offsetXPercent = (offsetX  / $seekBar.width()) * 100;
+       
+       offsetXPercent = Math.max(0, offsetXPercent);
+       offsetXPercent = Math.min(100, offsetXPercent); 
+       var percentageString = offsetXPercent + '%';
+       $seekBar.find('.fill').width(percentageString);
+       $seekBar.find('.thumb').css({left: percentageString});
+     }
+
+      return {
+       templateUrl: '/templates/directives/slider.html', 
+       replace: true,
+       restrict: 'E',
+
+       link: function(scope, element, attributes) {
+         var $seekBar = $(element);
+         $seekBar.click(function(event) {
+            updateSeekPercentage($seekBar, event);
+         });
+ 
+         $seekBar.find('.thumb').mousedown(function(event){
+         $seekBar.addClass('no-animate');
+ 
+         $(document).bind('mousemove.thumb', function(event){
+            updateSeekPercentage($seekBar, event);
+         });
+ 
+         //cleanup
+         $(document).bind('mouseup.thumb', function() {
+            $seekBar.removeClass('no-animate');
+            $(document).unbind('mousemove.thumb');
+            $(document).unbind('mouseup.thumb');
+         });
+       });
+      }
+     };
+   }); 
+});
