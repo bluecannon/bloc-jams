@@ -3,30 +3,32 @@
    <div class="row"> <!-- Album Header -->
      <div ng-repeat="album in albums" class="collection-album-container col-md-2">
        <!-- #37 - Angularize Collection Page. 1-08-2015 -->      
-       <div ng-mouseenter="showOverlay = true" ng-mouseleave="showOverlay = false"  class="collection-album-image-container">
-         <img ng-src="{{ album.albumArtUrl }}"> 
-         <div class="collection-album-image-overlay" ng-show="showOverlay">
-           <div class="collection-overlay-content">
-             <a class="collection-overlay-button" ng-click="playAlbum(album)">
-               <i class="fa fa-play"></i>
-             </a>&nbsp; 
-             <a class="collection-overlay-button">
-               <i class="fa fa-plus"></i>
-             </a>
-           </div>
-         </div>
-      </div> <!-- end of ng-mouseenter. #37 -->
+       <div ng-mouseenter="showOverlay = true" ng-mouseleave="showOverlay = false"  class="collection- album-image-container">
+          <img ng-src="{{ album.albumArtUrl }}"> 
+          <div class="collection-album-image-overlay" ng-show="showOverlay">
+            <div class="collection-overlay-content">
+              <a class="collection-overlay-button" ng-click="playAlbum(album)">
+              <i class="fa fa-play"></i>
+              </a>&nbsp; 
+              <a class="collection-overlay-button">
+              <i class="fa fa-plus"></i>
+              </a>
+            </div>
+          </div>
+       </div> <!-- end of ng-mouseenter. #37 -->
       
-         <div class="collection-album-info caption">
+       <div class="collection-album-info caption">
+         <slider></slider>  <!-- #43 - Harry added the Play-bar under each album collection. 1-20-2015 -->
          <p>
          <a class="album-name" ui-sref="album"> {{ album.name }} </a>
-           <br/>
-           <a ui-sref="album"> {{ album.artist }} </a>
-           <br/>
+         <br/>
+         <a ui-sref="album"> {{ album.artist }} </a>
+         <br/>
            {{ album.songs.length }} songs
-           <br/>
+         <br/>
          </p>
-       </div>
-     </div>
-   </div>
- </div> 
+       </div> <!-- end of class="collection-album-info caption" -->
+
+     </div> <!-- end of ng-repeat="album in albums"  -->
+   </div>   <!-- end of class="row" -->
+ </div>     <!-- end of class="collection-container container" -->

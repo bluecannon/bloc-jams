@@ -45,7 +45,7 @@
      templateUrl: '/templates/album.html',
      controller: 'Album.controller'
    });
- }]);
+ }]); //end blocJams.config //
 
  // This is a cleaner way to call the controller than crowding it on the module definition. //
  blocJams.controller('Landing.controller', ['$scope', function($scope) { 
@@ -78,7 +78,7 @@
    $scope.playAlbum = function(album){
       SongPlayer.setSong(album, album.songs[0]); // Targets first song in the array.
    };
- }]);
+ }]); // end Collection.controller //
 
  // #38 - Angularize Album Page. 1-12-2015 //
  blocJams.controller('Album.controller', ['$scope', 'SongPlayer', function($scope, SongPlayer) {
@@ -96,95 +96,93 @@
 
    $scope.getSongState = function(song) {
      if (song === SongPlayer.currentSong && SongPlayer.playing) {
-       return 'playing';
+        return 'playing';
      }
      else if (song === hoveredSong) {
-       return 'hovered';
+        return 'hovered';
      }
-     return 'default';
-   };
+      return 'default';
+   }; // end getSongState //
 
    $scope.playSong = function(song) {
      SongPlayer.setSong($scope.album, song);
-    };
+   };
  
-    $scope.pauseSong = function(song) {
+   $scope.pauseSong = function(song) {
       SongPlayer.pause();
-    };
- }]);
+   };
+ }]); // Album.controller //
 
- blocJams.controller('PlayerBar.controller', ['$scope', 'SongPlayer', function($scope, SongPlayer) {
-  $scope.songPlayer = SongPlayer;
- }]);
- 
  // #40 - Create Song Player Service Tied to Playerbar. 1-13-2015 //
  blocJams.controller('PlayerBar.controller', ['$scope', 'SongPlayer', function($scope, SongPlayer) {
-   $scope.songPlayer = SongPlayer;
+    $scope.songPlayer = SongPlayer;
  }]);
 
- blocJams.service('SongPlayer', function() {
-  // #42 - Playing Music. 1-13-2015 //
-   var currentSoundFile = null;
-  // #41 - Functional Next and Previous Buttons. 1-13-2015 //
-   var trackIndex = function(album, song) {
-     return album.songs.indexOf(song);
-   };
+  blocJams.service('SongPlayer', function() {
+    // #42 - Playing Music. 1-13-2015 //
+    var currentSoundFile = null;
+    // #41 - Functional Next and Previous Buttons. 1-13-2015 //
+    var trackIndex = function(album, song) {
+       return album.songs.indexOf(song);
+    };
 
-   return {
-     currentSong: null,
-     currentAlbum: null,
-     playing: false,
+    return {
+       currentSong: null,
+       currentAlbum: null,
+       playing: false,
  
-     play: function() {
-       this.playing = true;
-       currentSoundFile.play();  // #42 //
-     },
-     pause: function() {
-       this.playing = false;
-       currentSoundFile.play();  // #42 //
-     },
-     // #41 - Functional Next and Previous Buttons. 1-13-2015 //
-     next: function() {
-       var currentTrackIndex = trackIndex(this.currentAlbum, this.currentSong);
-       currentTrackIndex++;
-       if (currentTrackIndex >= this.currentAlbum.songs.length) {
-         currentTrackIndex = 0;
-       }
-       var song = this.currentAlbum.songs[currentTrackIndex];  // #42 //
-       this.setSong(this.currentAlbum, song);                  /* #42 */
-     },
-     previous: function() {
-       var currentTrackIndex = trackIndex(this.currentAlbum, this.currentSong);
-       currentTrackIndex--;
-       if (currentTrackIndex < 0) {
-         currentTrackIndex = this.currentAlbum.songs.length - 1;
-       }
+       play: function() {
+         this.playing = true;
+         currentSoundFile.play();  // #42 //
+       },
+       pause: function() {
+         this.playing = false;
+         currentSoundFile.play();  // #42 //
+       },
+       // #41 - Functional Next and Previous Buttons. 1-13-2015 //
+       next: function() {
+          var currentTrackIndex = trackIndex(this.currentAlbum, this.currentSong);
+          currentTrackIndex++;
+          if (currentTrackIndex >= this.currentAlbum.songs.length) {
+            currentTrackIndex = 0;
+          }
+          var song = this.currentAlbum.songs[currentTrackIndex];  // #42 //
+          this.setSong(this.currentAlbum, song);                  /* #42 */
+       }, // next //
+
+       previous: function() {
+         var currentTrackIndex = trackIndex(this.currentAlbum, this.currentSong);
+         currentTrackIndex--;
+         if (currentTrackIndex < 0) {
+           currentTrackIndex = this.currentAlbum.songs.length - 1;
+         }
  
-       var song = this.currentAlbum.songs[currentTrackIndex];  /* #42 */
-       this.setSong(this.currentAlbum, song);                  /* #42 */
-     },
+         var song = this.currentAlbum.songs[currentTrackIndex];  /* #42 */
+         this.setSong(this.currentAlbum, song);                  /* #42 */
+       }, // previous //
 
-     setSong: function(album, song) {
-       // #42 - Playing Music. 1-13-2015 //
-       if (currentSoundFile) {
-        currentSoundFile.stop();
-       }  // end of #42 //
-       this.currentAlbum = album;
-       this.currentSong = song;
+       setSong: function(album, song) {
+         // #42 - Playing Music. 1-13-2015 //
+         if (currentSoundFile) {
+           currentSoundFile.stop();
+         }  // end of #42 //
+         this.currentAlbum = album;
+         this.currentSong = song;
 
-       // #42 - Playing Music. 1-13-2015 //
-       currentSoundFile = new buzz.sound(song.audioUrl, {
-       formats: [ "mp3" ],
-       preload: true
-     });
+         // #42 - Playing Music. 1-13-2015 //
+         currentSoundFile = new buzz.sound(song.audioUrl, {
+         formats: [ "mp3" ],
+         preload: true
+         }); // currentSoundFile //
  
-     this.play();
-     }
-   };
-   
-   blocJams.directive('slider', function() {
-
-     var updateSeekPercentage = function($seekBar, event) {
+         this.play();
+       } // setSong: //
+     };  // return //
+  });    // end blocJams.service('SongPlayer',) //
+  
+  // define the custom directive, 'slider' here. #43, Harry. 01-20-2015 // 
+  blocJams.directive('slider', function() {
+       var updateSeekPercentage = function($seekBar, event) {
        var barWidth = $seekBar.width();
        var offsetX =  event.pageX - $seekBar.offset().left;
        var offsetXPercent = (offsetX  / $seekBar.width()) * 100;
@@ -194,34 +192,33 @@
        var percentageString = offsetXPercent + '%';
        $seekBar.find('.fill').width(percentageString);
        $seekBar.find('.thumb').css({left: percentageString});
-     }
+      } // end var updateSeekPercentage //
 
       return {
-       templateUrl: '/templates/directives/slider.html', 
-       replace: true,
-       restrict: 'E',
+        templateUrl: '/templates/directives/slider.html', 
+        replace: true,
+        restrict: 'E',
+        link: function(scope, element, attributes) {
+          var $seekBar = $(element);
 
-       link: function(scope, element, attributes) {
-         var $seekBar = $(element);
-         $seekBar.click(function(event) {
-            updateSeekPercentage($seekBar, event);
-         });
+          $seekBar.click(function(event) {
+             updateSeekPercentage($seekBar, event);
+          });
  
-         $seekBar.find('.thumb').mousedown(function(event){
-         $seekBar.addClass('no-animate');
+          $seekBar.find('.thumb').mousedown(function(event){
+             $seekBar.addClass('no-animate');
+
+             $(document).bind('mousemove.thumb', function(event){
+                updateSeekPercentage($seekBar, event);
+             });
  
-         $(document).bind('mousemove.thumb', function(event){
-            updateSeekPercentage($seekBar, event);
-         });
- 
-         //cleanup
-         $(document).bind('mouseup.thumb', function() {
-            $seekBar.removeClass('no-animate');
-            $(document).unbind('mousemove.thumb');
-            $(document).unbind('mouseup.thumb');
-         });
-       });
-      }
-     };
-   }); 
-});
+             //cleanup
+             $(document).bind('mouseup.thumb', function() {
+               $seekBar.removeClass('no-animate');
+               $(document).unbind('mousemove.thumb');
+               $(document).unbind('mouseup.thumb');
+             }); // end bind('mouseup.thumb') //
+         });     // end mousedown //
+        }        // end link //
+      };         // end return //
+  });            // end blocJams.directive('slider',) //
