@@ -91,7 +91,7 @@
         vertical-align: middle;
       }
     }
-  } // end .player-bar //
+  } // end .player-bar 
  
   .player-bar-control-group {
     display: table-cell;
@@ -140,16 +140,16 @@
       transition: all 100ms ease-in-out;
     }
  
-    &.no-animate {
+    &:active {
       .fill, .thumb {
         transition: none;
       }
     }
  
-    &:hover .thumb {
+    &:hover .thumb, &:active .thumb {
       width: 20px;
       height: 20px;
       margin-top: -10px;
       margin-left: -10px;
     } 
-  } // end .slider //
+  } // end .slider 
