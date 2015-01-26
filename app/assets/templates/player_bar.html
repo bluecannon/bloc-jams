@@ -15,11 +15,12 @@
      <div class='currently-playing player-bar-control-group'>
        <h2 class='song-name'> {{ songPlayer.currentSong.name }} </h2>
        <div class='seek-control'>
-         <slider></slider>   <!-- #43 - Create a Slider Directive for Seek Bars. 1-15-2015 -->
-         <div class='current-time'> {{ songPlayer.playTime }} </div>
-         <div class='total-time'> {{ songPlayer.currentSong.length }}</div>
+          <slider value='{{playTime}}' max='{{songPlayer.currentSong.length}}' on-change='songPlayer.seek(value)'></slider>  <!-- #45  
+             - Making the Seek Bar Work with Music. 1-25-2015 -->
+          <div class='current-time'> {{ songPlayer.playTime }} </div>
+          <div class='total-time'> {{ songPlayer.currentSong.length }}</div>
        </div>
-        <h3 class='artist-name'>{{ songPlayer.currentAlbum.artist }} </h3>
+       <h3 class='artist-name'>{{ songPlayer.currentAlbum.artist }} </h3>
      </div>
      <div class='right-controls player-bar-control-group'>
        <div class='volume' >
