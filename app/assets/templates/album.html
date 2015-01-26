@@ -8,8 +8,8 @@
        <h3 class='album-title'> {{ album.name }}</h3>
        <h4 class='album-artist'> {{ album.artist }} </h4>
        <h5 class='album-meta-info'> {{ album.year }} on {{ album.label }} </h5>
-    </div>
-  </div>
+    </div> <!-- class='album-header-information -->
+  </div>   <!-- class='album-header-container -->
   <div class='row'> <!-- Song table -->
     <table class='album-song-listing table'>
       <!-- #38 - Angularize Album Page. 1-12-2015 -->
@@ -30,12 +30,12 @@
                {{ $index + 1 }}
              </span>
            </span>
-        <td>
+        </td>
         <td class="col-md-9"> {{ song.name }} </td>
-        <td class="col-md-2"> {{ song.length }} </td>
+        <td class="col-md-2"> {{ song.length | timecode }} </td>
       </tr>
     </table>
-  </div>
+  </div>  <!-- class='row' -->
   <!-- #39 - Implementing the Player Bar Using Angular Templates. 1-13-2015 -->
   <ng-include src="'/templates/player_bar.html'"></ng-include>
-</div>
+</div>    <!-- class='album-container -->

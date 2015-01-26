@@ -380,9 +380,15 @@ if (document.URL.match(/\/album.html/)) {
  // #40 - Create Song Player Service Tied to Playerbar. 1-13-2015 //
  blocJams.controller('PlayerBar.controller', ['$scope', 'SongPlayer', function($scope, SongPlayer) {
     $scope.songPlayer = SongPlayer;
- }]);
 
-  blocJams.service('SongPlayer', function() {
+     SongPlayer.onTimeUpdate(function(event, time){
+       $scope.$apply(function(){
+          $scope.playTime = time;
+       });
+     });
+ }]); // blocJams.controller('PlayerBar.controller',
+
+  blocJams.service('SongPlayer', ['$rootScope', function($rootScope) {
     // #42 - Playing Music. 1-13-2015 //
     var currentSoundFile = null;
     // #41 - Functional Next and Previous Buttons. 1-13-2015 //
@@ -434,24 +440,32 @@ if (document.URL.match(/\/album.html/)) {
          }
        },  // seek
 
-       setSong: function(album, song) {
-         // #42 - Playing Music. 1-13-2015 //
-         if (currentSoundFile) {
-           currentSoundFile.stop();
-         }  // end of #42 //
-         this.currentAlbum = album;
-         this.currentSong = song;
+       onTimeUpdate: function(callback) {
+          return $rootScope.$on('sound:timeupdate', callback);
+       },
 
-         // #42 - Playing Music. 1-13-2015 //
-         currentSoundFile = new buzz.sound(song.audioUrl, {
-         formats: [ "mp3" ],
-         preload: true
-         }); // currentSoundFile //
- 
-         this.play();
-       } // setSong: //
-     };  // return //
-  });    // end blocJams.service('SongPlayer',) //
+       setSong: function(album, song) {
+          // #42 - Playing Music. 1-13-2015 
+          if (currentSoundFile) {
+            currentSoundFile.stop();
+          }  // end of currentSoundFile //
+          this.currentAlbum = album;
+          this.currentSong = song;
+
+          // #42 - Playing Music. 1-13-2015 //
+          currentSoundFile = new buzz.sound(song.audioUrl, {
+             formats: [ "mp3" ],
+             preload: true
+          }); // currentSoundFile //
+
+          currentSoundFile.bind('timeupdate', function(e){
+             $rootScope.$broadcast('sound:timeupdate', this.getTime());
+          }); // end of bind('timeupdate',
+  
+          this.play();
+        } // setSong: 
+    };    // return 
+  }]);    // end blocJams.service('SongPlayer',) 
   
   // define the custom directive, 'slider' here. #43, Harry. 01-20-2015 // 
   blocJams.directive('slider', ['$document', function($document){
@@ -470,15 +484,13 @@ if (document.URL.match(/\/album.html/)) {
      if (typeof value === 'number') {
        return value;
      }
- 
      if(typeof value === 'undefined') {
        return defaultValue;
      }
- 
      if(typeof value === 'string') {
        return Number(value);
      }
-    }
+    }  // numberFromValue = function()
  
     return {
        templateUrl: '/templates/directives/slider.html', 
@@ -493,10 +505,12 @@ if (document.URL.match(/\/album.html/)) {
           // #44, Angular Slider Drag with Scope. 1-23-2015 
           // These values represent the progress into the song/volume bar, and its max value.
           // For now, we're supplying arbitrary initial and max values.
+
           scope.value = 0;
+          // #44 - Switch to a more sensible default max
           scope.max = 100;
           var $seekBar = $(element);
-          console.log(attributes); // #45, Making the Seek Bar Work with Music. 1-25-2015;
+          
           attributes.$observe('value', function(newValue) {
              scope.value = numberFromValue(newValue, 0);
           });
@@ -511,16 +525,13 @@ if (document.URL.match(/\/album.html/)) {
              var max = scope.max || 100;
              percent = value / max * 100;
              return percent + "%";
-          }
- 
+          } 
           scope.fillStyle = function() {
              return {width: percentString()};
-          }
- 
+          } 
           scope.thumbStyle = function() {
              return {left: percentString()};
           }
-
           scope.onClickSlider = function(event) {
              var percent = calculateSliderPercentFromMouseEvent($seekBar, event);
              scope.value = percent * scope.max;
@@ -542,15 +553,41 @@ if (document.URL.match(/\/album.html/)) {
                 $document.unbind('mouseup.thumb');
              });  // end bind('mouseup.thumb')
           };      // end scope.trackThumb
+
           // #45, Making the Seek Bar Work with Music. 1-25-2015; 
+          // #45, Place this as the last function defined in the 'link' function of the directive.
           var notifyCallback = function(newValue) {
              if(typeof scope.onChange === 'function') {
-               scope.onChange({value: newValue});
+                scope.onChange({value: newValue});
              }
-          }; 
-        }    // end link 
-    };       // end return 
-   }]);      // end blocJams.directive('slider',). Make sure to close out the parentheses and brackets            
+          }; // end notifyCallback = function(newValue)
+       }     // end link 
+    };       // end return
+ }]);        // Make sure to close out the parentheses and brackets
+
+ // #46 - Adding a Timecode to the Music Player. 1-25-2015
+ blocJams.filter('timecode', function(){
+   return function(seconds) {
+      seconds = Number.parseFloat(seconds);
+      // Returned when no time is provided.
+      if (Number.isNaN(seconds)) {
+         return '-:--';
+      }
+      // make it a whole number
+      var wholeSeconds = Math.floor(seconds);
+      var minutes = Math.floor(wholeSeconds / 60);
+      remainingSeconds = wholeSeconds % 60;
+      var output = minutes + ':';
+ 
+      // zero pad seconds, so 9 seconds should be :09
+      if (remainingSeconds < 10) {
+          output += '0';
+      }
+      output += remainingSeconds;
+      return output;
+   } // end of return function(seconds)
+ })  // end of blocJams.filter('timecode'
+
 });
 
 ;require.register("scripts/collection", function(exports, require, module) {
