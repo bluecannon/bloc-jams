@@ -381,14 +381,23 @@ if (document.URL.match(/\/album.html/)) {
  blocJams.controller('PlayerBar.controller', ['$scope', 'SongPlayer', function($scope, SongPlayer) {
     $scope.songPlayer = SongPlayer;
 
-     SongPlayer.onTimeUpdate(function(event, time){
+    // #47 - volume control. 1-26-2015
+    $scope.volumeClass = function() {
+     return {
+        'fa-volume-off': SongPlayer.volume == 0,
+        'fa-volume-down': SongPlayer.volume <= 70 && SongPlayer.volume > 0,
+        'fa-volume-up': SongPlayer.volume > 70
+     }
+    }
+
+    SongPlayer.onTimeUpdate(function(event, time){
        $scope.$apply(function(){
           $scope.playTime = time;
        });
-     });
+    });
  }]); // blocJams.controller('PlayerBar.controller',
 
-  blocJams.service('SongPlayer', ['$rootScope', function($rootScope) {
+ blocJams.service('SongPlayer', ['$rootScope', function($rootScope) {
     // #42 - Playing Music. 1-13-2015 //
     var currentSoundFile = null;
     // #41 - Functional Next and Previous Buttons. 1-13-2015 //
@@ -400,6 +409,7 @@ if (document.URL.match(/\/album.html/)) {
        currentSong: null,
        currentAlbum: null,
        playing: false,
+       volume: 90, // #47 - volume control. 1-26-2015
  
        play: function() {
          this.playing = true;
@@ -444,6 +454,13 @@ if (document.URL.match(/\/album.html/)) {
           return $rootScope.$on('sound:timeupdate', callback);
        },
 
+       // #47 - volume control. 1-26-2015
+       setVolume: function(volume) {
+         if(currentSoundFile){
+           currentSoundFile.setVolume(volume);
+         }
+         this.volume = volume;
+        },
        setSong: function(album, song) {
           // #42 - Playing Music. 1-13-2015 
           if (currentSoundFile) {
@@ -458,8 +475,11 @@ if (document.URL.match(/\/album.html/)) {
              preload: true
           }); // currentSoundFile //
 
+          // #47 - volume control. 1-26-2015
+          currentSoundFile.setVolume(this.volume);
+
           currentSoundFile.bind('timeupdate', function(e){
-             $rootScope.$broadcast('sound:timeupdate', this.getTime());
+              $rootScope.$broadcast('sound:timeupdate', this.getTime());
           }); // end of bind('timeupdate',
   
           this.play();

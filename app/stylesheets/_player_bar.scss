@@ -79,10 +79,11 @@
       display: inline-block;
  
       i {
-        width: 40px;
+        width: 20px;       // #47 - volume control. was 40px.
         font-size: 20px;
         display: inline-block;
         vertical-align: middle;
+        text-align: left;  // #47 - volume control
       }
  
       .slider {
