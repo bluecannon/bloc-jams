@@ -153,7 +153,7 @@
        },
        pause: function() {
          this.playing = false;
-         currentSoundFile.play();  // #42 //
+         currentSoundFile.pause();  // #42 //
        },
        // #41 - Functional Next and Previous Buttons. 1-13-2015 //
        next: function() {
