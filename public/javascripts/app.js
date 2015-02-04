@@ -370,10 +370,17 @@ if (document.URL.match(/\/album.html/)) {
 
    $scope.playSong = function(song) {
      SongPlayer.setSong($scope.album, song);
+     SongPlayer.isMuted = false;
    };
  
    $scope.pauseSong = function(song) {
       SongPlayer.pause();
+      SongPlayer.isMuted = false;
+   };
+
+   $scope.muteSong = function(song) {
+      SongPlayer.mute();
+      SongPlayer.isMuted = true;
    };
  }]); // Album.controller //
 
@@ -384,9 +391,9 @@ if (document.URL.match(/\/album.html/)) {
     // #47 - volume control. 1-26-2015
     $scope.volumeClass = function() {
      return {
-        'fa-volume-off': SongPlayer.volume == 0,
-        'fa-volume-down': SongPlayer.volume <= 70 && SongPlayer.volume > 0,
-        'fa-volume-up': SongPlayer.volume > 70
+        'fa-volume-off':  SongPlayer.isMuted == true, 
+        'fa-volume-down': SongPlayer.volume <= 70 && SongPlayer.volume > 0 && SongPlayer.isMuted == false,
+        'fa-volume-up': SongPlayer.volume > 70 && SongPlayer.isMuted == false,
      }
     }
 
@@ -409,8 +416,21 @@ if (document.URL.match(/\/album.html/)) {
        currentSong: null,
        currentAlbum: null,
        playing: false,
-       volume: 90, // #47 - volume control. 1-26-2015
+       volume: 90, // default volume. #47 - volume control. 1-26-2015
+       isMuted: false,
+
  
+       mute: function(){
+         if (this.isMuted === false){
+            this.isMuted = true;
+            currentSoundFile.mute(); 
+         }
+         else {
+            currentSoundFile.unmute();   
+            this.isMuted = false;
+         }
+       },
+
        play: function() {
          this.playing = true;
          currentSoundFile.play();  // #42 //
@@ -461,6 +481,7 @@ if (document.URL.match(/\/album.html/)) {
          }
          this.volume = volume;
         },
+
        setSong: function(album, song) {
           // #42 - Playing Music. 1-13-2015 
           if (currentSoundFile) {
@@ -477,7 +498,6 @@ if (document.URL.match(/\/album.html/)) {
 
           // #47 - volume control. 1-26-2015
           currentSoundFile.setVolume(this.volume);
-
           currentSoundFile.bind('timeupdate', function(e){
               $rootScope.$broadcast('sound:timeupdate', this.getTime());
           }); // end of bind('timeupdate',
